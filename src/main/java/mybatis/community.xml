@@ -2,6 +2,41 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper>
+<mapper namespace="community">
+<!-- Commnunity.java vo 클래스를 정의하고 하세요.
+1.메인글 글쓰기: insert
+2.		글수정: update
+3.		글삭제: delete
+4.		글보기: select
+ -->
+ 	<!-- 글쓰기 -->
+	<insert id="insert" parameterType="vo.CommunityVO">
+		INSERT INTO community 
+			(idx,writer,title,content)
+		VALUES 
+			(community_idx_seq.nextval, #{writer}, #{title}, #{content})
+	</insert>
 	
+	<!-- 글수정 -->
+	<update id="update" parameterType="vo.CommunityVO">
+		UPDATE community
+		SET content = ${content}
+		WHERE idx = #{idx}
+	</update>
+	
+	<!-- 글삭제 -->
+	<delete id="delete" parameterType="vo.CommunityVO">
+		DELETE community
+		WHERE idx = #{idx}
+	</delete>
+	
+	<!-- 글보기 -->
+	<select id="select" parameterType="int" resultType="org.iclass.vo.CommunityVO">
+		SELECT 
+			IDX, WRITER, TITLE, CONTENT, READCOUNT, CREATEDAT, IP, COMMENTCOUNT
+		FROM 
+			community
+		WHERE idx = #{idx}
+	</select>
 </mapper>
+
